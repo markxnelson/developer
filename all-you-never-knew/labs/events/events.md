@@ -83,6 +83,8 @@ OSON is Oracle Database's optimized JSON storage format. The customer service ap
 
 Not only is OSON an efficient JSON serialization format, it also enables the use of Oracle Database JSON features without requiring application changes. We'll see this in action in the JSON lab.
 
+You may now proceed to the next lab.
+
 ## Learn More
 
 * [Transactional Event Queues (TxEventQ)](https://www.oracle.com/database/advanced-queuing/)

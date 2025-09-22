@@ -58,6 +58,8 @@ mvn spring-boot:run
 </copy>
 ```
 
+You may now proceed to the next lab.
+
 ## Acknowledgements
 
 * **Author** - Mark Nelson, Developer Evangelist, August 2025
