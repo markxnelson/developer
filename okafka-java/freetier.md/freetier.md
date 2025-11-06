@@ -16,9 +16,11 @@ Estimated Time: 15 minutes
 
 This lab assumes you have:
 
-* 
+* Completed the "Get Started" lab, and have access to an Oracle Autonomous AI Database instance.
 
 ## Task 1: Download the Oracle Autonomous AI Database Wallet
+
+TBD
 
 ## Task 2: Configure The Wallet For OKafka
 

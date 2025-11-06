@@ -20,24 +20,34 @@ This lab assumes you have:
 ## Task 1: Review Database User Grants For OKafka
 
 ```sql
+<copy>
 -- user for okafka.  You may modify tablespace grants as appropriate.
 create user TESTUSER identified by testpwd;
 grant create session to TESTUSER;
 grant resource, connect, unlimited tablespace to TESTUSER;
 
--- okafka permissions.
-grant aq_user_role to TESTUSER;
-grant execute on dbms_aq to  TESTUSER;
-grant execute on dbms_aqadm to TESTUSER;
-grant select on gv_$session to TESTUSER;
-grant select on v_$session to TESTUSER;
-grant select on gv_$instance to TESTUSER;
-grant select on gv_$listener_network to TESTUSER;
-grant select on SYS.DBA_RSRC_PLAN_DIRECTIVES to TESTUSER;
-grant select on gv_$pdbs to TESTUSER;
-grant select on user_queue_partition_assignment_table to TESTUSER;
-exec dbms_aqadm.GRANT_PRIV_FOR_RM_PLAN('TESTUSER');
+-- AQ User role to be able to use AQ
+GRANT AQ_USER_ROLE to TESTUSER;
+
+-- To be able to invoke operations from AQ-JMS
+GRANT EXECUTE on DBMS_AQ to TESTUSER;
+GRANT EXECUTE on DBMS_AQIN to TESTUSER;
+-- To be able to create transactional event queue and subscriber
+GRANT EXECUTE on DBMS_AQADM to TESTUSER;
+-- For JOIN GROUP and SYNC
+GRANT EXECUTE on DBMS_TEQK to TESTUSER;
+-- To be able to discover other RAC nodes of the database
+GRANT SELECT on GV$SESSION to TESTUSER;
+GRANT SELECT on V$SESSION to TESTUSER;
+GRANT SELECT on GV$INSTANCE to TESTUSER;
+GRANT SELECT on GV$LISTENER_NETWORK to TESTUSER;
+-- To be able to recover from SHUTDOWN ABORT
+GRANT SELECT on GV$PDBS to TESTUSER;
+-- Property max.poll.interval.ms , property, is implemented using DBMS_RESOURCE_MANAGER. Below two privileges allow the user to check if a DBMS RESOURE MANAGER plan exists or not aid if it does not , create a new plan  based onmax.poll.interval.ms.
+GRANT SELECT on SYS.DBA_RSRC_PLAN_DIRECTIVES to TESTUSER;
+EXEC DBMS_AQADM.GRANT_PRIV_FOR_RM_PLAN('TESTUSER');
 commit;
+</copy>
 ```
 
 You can find a SQL script to configure an OKafka database user in the [`oraclefree/grant_permissions.sql` file](https://github.com/oracle/microservices-datadriven/blob/main/code-teq/okafka-lab/oraclefree/grant_permissions.sql).
